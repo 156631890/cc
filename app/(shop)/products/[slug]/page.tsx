@@ -13,16 +13,11 @@ import {
   Truck,
   Shield,
   RotateCcw,
+  X,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Price, Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animations/index";
+import { Price } from "@/components/ui/badge";
+import { ColorSelector } from "@/components/ui/color-selector";
+import { FadeIn } from "@/components/animations/index";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products";
 import { useCartStore } from "@/lib/store";
 
@@ -34,16 +29,17 @@ export default function ProductDetailPage() {
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState(product?.colors[0]?.name || "");
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-serif text-4xl font-semibold mb-4">
+          <h1 className="font-serif text-3xl text-white mb-4">
             Product Not Found
           </h1>
           <Link href="/products">
-            <Button variant="primary">Back to Products</Button>
+            <button className="btn-outline">Back to Products</button>
           </Link>
         </div>
       </div>
@@ -63,20 +59,20 @@ export default function ProductDetailPage() {
     : 0;
 
   return (
-    <div className="min-h-screen">
-      {/* Breadcrumb */}
-      <div className="bg-surface border-b border-text-muted/10 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center gap-2 text-sm text-text-muted">
-            <Link href="/" className="hover:text-primary transition-colors">
+    <div className="min-h-screen bg-black">
+      {/* Breadcrumb - Minimal */}
+      <div className="border-b border-gold/10 py-4">
+        <div className="max-w-7xl mx-auto px-6">
+          <nav className="flex items-center gap-2 text-sm text-gray-500">
+            <Link href="/" className="hover:text-gold transition-colors">
               Home
             </Link>
             <span>/</span>
             <Link
               href="/products"
-              className="hover:text-primary transition-colors"
+              className="hover:text-gold transition-colors"
             >
-              Products
+              Collection
             </Link>
             <span>/</span>
             <span className="text-white">{product.name}</span>
@@ -84,12 +80,13 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Images */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
+          {/* Image Gallery */}
           <FadeIn>
             <div className="space-y-4">
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-secondary">
+              {/* Main Image */}
+              <div className="relative aspect-[4/5] rounded-lg overflow-hidden bg-gray-900">
                 <Image
                   src={product.images[selectedImage]}
                   alt={product.name}
@@ -98,22 +95,23 @@ export default function ProductDetailPage() {
                   priority
                 />
                 {discount > 0 && (
-                  <Badge
-                    variant="danger"
-                    className="absolute top-4 left-4"
-                  >{`-${discount}%`}</Badge>
+                  <span className="absolute top-4 left-4 px-2 py-1 bg-gold text-black text-[10px] tracking-wider uppercase font-medium">
+                    Save {discount}%
+                  </span>
                 )}
               </div>
+
+              {/* Thumbnails */}
               {product.images.length > 1 && (
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   {product.images.map((image, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
+                      className={`relative w-20 h-20 rounded overflow-hidden border-2 transition-all ${
                         selectedImage === index
-                          ? "border-primary"
-                          : "border-transparent hover:border-text-muted/50"
+                          ? "border-gold opacity-100"
+                          : "border-transparent opacity-60 hover:opacity-100"
                       }`}
                     >
                       <Image
@@ -129,19 +127,30 @@ export default function ProductDetailPage() {
             </div>
           </FadeIn>
 
-          {/* Info */}
+          {/* Product Info */}
           <FadeIn delay={0.2}>
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                {product.isNew && <Badge variant="primary">New</Badge>}
-                {product.isBestseller && <Badge variant="success">Bestseller</Badge>}
+            <div className="lg:sticky lg:top-24">
+              {/* Badges */}
+              <div className="flex items-center gap-2 mb-4">
+                {product.isNew && (
+                  <span className="px-2 py-1 bg-gold text-black text-[9px] tracking-wider uppercase">
+                    New
+                  </span>
+                )}
+                {product.isBestseller && (
+                  <span className="px-2 py-1 bg-gray-800 text-gray-300 text-[9px] tracking-wider uppercase border border-gold/20">
+                    Bestseller
+                  </span>
+                )}
               </div>
 
-              <h1 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
+              {/* Title */}
+              <h1 className="font-serif text-3xl lg:text-4xl text-white mb-4">
                 {product.name}
               </h1>
 
-              <div className="flex items-center gap-4 mb-6">
+              {/* Price */}
+              <div className="mb-6">
                 <Price
                   price={product.price}
                   comparePrice={product.comparePrice}
@@ -149,127 +158,132 @@ export default function ProductDetailPage() {
                 />
               </div>
 
-              <p className="text-text-muted text-lg mb-8">
+              {/* Description */}
+              <p className="text-gray-400 leading-relaxed mb-8">
                 {product.description}
               </p>
 
-              {/* Color Selection */}
-              <div className="mb-8">
-                <h3 className="font-medium text-white mb-4">
-                  Available Colors
-                </h3>
-                <div className="flex gap-3">
-                  {product.colors.map((color) => (
-                    <div
-                      key={color.name}
-                      className="w-10 h-10 rounded-full border-2 border-text-muted/30"
-                      style={{ backgroundColor: color.hex }}
-                      title={color.name}
-                    />
-                  ))}
-                </div>
-              </div>
+              {/* Color Selector */}
+              {product.colors.length > 0 && (
+                <ColorSelector
+                  colors={product.colors}
+                  selected={selectedColor}
+                  onChange={setSelectedColor}
+                  className="mb-8"
+                />
+              )}
 
-              {/* Features */}
-              <div className="mb-8">
-                <h3 className="font-medium text-white mb-4">Features</h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {product.features.map((feature, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center gap-2 text-text-muted"
-                    >
-                      <Check className="w-4 h-4 text-primary" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* Features - Minimal */}
+              {product.features.length > 0 && (
+                <div className="mb-8">
+                  <p className="text-xs tracking-wider uppercase text-gray-400 mb-4">
+                    Details
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {product.features.slice(0, 4).map((feature, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center gap-2 text-gray-400 text-sm"
+                      >
+                        <div className="w-1 h-1 bg-gold rounded-full" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               {/* Quantity & Add to Cart */}
-              <div className="flex items-center gap-4 mb-8">
-                <div className="flex items-center border border-text-muted/20 rounded-lg">
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-4">
+                  {/* Quantity Selector */}
+                  <div className="flex items-center border border-gold/20 rounded">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="p-3 text-gray-400 hover:text-white transition-colors"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="w-12 text-center text-white font-medium">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-3 text-gray-400 hover:text-white transition-colors"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Add to Cart Button */}
                   <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-3 hover:bg-surface transition-colors"
+                    onClick={handleAddToCart}
+                    disabled={!product.inStock}
+                    className="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="w-12 text-center font-medium">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="p-3 hover:bg-surface transition-colors"
-                  >
-                    <Plus className="w-4 h-4" />
+                    <ShoppingCart className="w-4 h-4" />
+                    {product.inStock ? "Add to Cart" : "Out of Stock"}
                   </button>
                 </div>
-                <Button
-                  size="lg"
-                  variant="primary"
-                  onClick={handleAddToCart}
-                  className="flex-1"
-                  disabled={!product.inStock}
-                >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  {product.inStock ? "Add to Cart" : "Out of Stock"}
-                </Button>
               </div>
 
-              {/* Trust Badges */}
-              <div className="grid grid-cols-3 gap-4 pt-8 border-t border-text-muted/10">
+              {/* Trust Badges - Minimal */}
+              <div className="grid grid-cols-3 gap-6 pt-6 border-t border-gold/10">
                 <div className="text-center">
-                  <Truck className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm text-text-muted">Free Shipping</p>
-                  <p className="text-xs text-text-muted/60">Over $200</p>
+                  <Truck className="w-5 h-5 text-gold mx-auto mb-2" />
+                  <p className="text-xs text-gray-400">Free Shipping</p>
+                  <p className="text-[10px] text-gray-600">Over $200</p>
                 </div>
                 <div className="text-center">
-                  <Shield className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm text-text-muted">2-Year Warranty</p>
-                  <p className="text-xs text-text-muted/60">Full Coverage</p>
+                  <Shield className="w-5 h-5 text-gold mx-auto mb-2" />
+                  <p className="text-xs text-gray-400">2-Year Warranty</p>
+                  <p className="text-[10px] text-gray-600">Full Coverage</p>
                 </div>
                 <div className="text-center">
-                  <RotateCcw className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm text-text-muted">Easy Returns</p>
-                  <p className="text-xs text-text-muted/60">30 Days</p>
+                  <RotateCcw className="w-5 h-5 text-gold mx-auto mb-2" />
+                  <p className="text-xs text-gray-400">Easy Returns</p>
+                  <p className="text-[10px] text-gray-600">30 Days</p>
                 </div>
               </div>
             </div>
           </FadeIn>
         </div>
 
-        {/* Reviews Section */}
-        <div className="mb-16">
-          <Card>
-            <CardHeader>
-              <CardTitle>Customer Reviews</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-6 mb-8">
+        {/* Reviews Section - Minimal */}
+        <div className="mb-20">
+          <div className="bg-gray-900 border border-gold/10 rounded-lg p-8 lg:p-12">
+            <h2 className="font-serif text-2xl text-white mb-8 text-center">
+              Customer Reviews
+            </h2>
+
+            <div className="max-w-2xl mx-auto">
+              {/* Rating Summary */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-10 pb-10 border-b border-gold/10">
                 <div className="text-center">
-                  <div className="font-serif text-5xl font-semibold text-primary mb-2">
+                  <div className="font-serif text-5xl text-gold mb-2">
                     4.9
                   </div>
                   <div className="flex gap-1 justify-center mb-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
                         key={i}
-                        className="w-5 h-5 fill-primary text-primary"
+                        className="w-4 h-4 fill-gold text-gold"
                       />
                     ))}
                   </div>
-                  <p className="text-text-muted text-sm">Based on 127 reviews</p>
+                  <p className="text-gray-500 text-sm">Based on 127 reviews</p>
                 </div>
-                <div className="flex-1">
+
+                {/* Rating Bars */}
+                <div className="flex-1 w-full sm:max-w-xs space-y-1">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <div key={i} className="flex items-center gap-3 mb-2">
-                      <span className="text-sm text-text-muted w-6">
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="text-gray-500 text-xs w-3">
                         {5 - i}
                       </span>
-                      <div className="flex-1 h-2 bg-surface rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-gray-800 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-primary"
+                          className="h-full bg-gold"
                           style={{
                             width:
                               i === 0
@@ -290,86 +304,84 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Sample Reviews */}
-              <StaggerChildren className="space-y-6">
+              <div className="space-y-6">
                 {[
                   {
                     name: "Michael S.",
                     rating: 5,
-                    comment: `Absolutely stunning quality! The ${product.name} exceeds my expectations. The polarized lenses are crystal clear and the frame feels premium.`,
+                    comment: `Absolutely stunning quality! The ${product.name} exceeds my expectations. The polarized lenses are crystal clear.`,
                     date: "2 weeks ago",
                   },
                   {
                     name: "Jennifer L.",
                     rating: 5,
-                    comment: "Perfect fit and excellent craftsmanship. I've received so many compliments. Will definitely be ordering more colors!",
+                    comment: "Perfect fit and excellent craftsmanship. Received so many compliments.",
                     date: "1 month ago",
                   },
                 ].map((review, index) => (
-                  <StaggerItem key={index}>
-                    <div className="border-b border-text-muted/10 pb-6 last:border-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-10 h-10 rounded-full bg-gradient-gold flex items-center justify-center">
-                            <span className="text-background font-semibold">
-                              {review.name[0]}
-                            </span>
-                          </div>
-                          <div>
-                            <p className="font-medium">{review.name}</p>
-                            <p className="text-text-muted text-sm">
-                              Verified Purchase
-                            </p>
-                          </div>
+                  <div
+                    key={index}
+                    className="border-b border-gold/10 pb-6 last:border-0 last:pb-0"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gold/10 rounded-full flex items-center justify-center">
+                          <span className="text-gold text-xs font-medium">
+                            {review.name[0]}
+                          </span>
                         </div>
-                        <div className="flex gap-1">
-                          {Array.from({ length: review.rating }).map((_, i) => (
-                            <Star
-                              key={i}
-                              className="w-4 h-4 fill-primary text-primary"
-                            />
-                          ))}
+                        <div>
+                          <p className="text-white text-sm">{review.name}</p>
+                          <p className="text-gray-600 text-xs">{review.date}</p>
                         </div>
                       </div>
-                      <p className="text-text-muted">{review.comment}</p>
+                      <div className="flex gap-0.5">
+                        {Array.from({ length: review.rating }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-3 h-3 fill-gold text-gold"
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </StaggerItem>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      "{review.comment}"
+                    </p>
+                  </div>
                 ))}
-              </StaggerChildren>
-            </CardContent>
-          </Card>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div>
-            <h2 className="font-serif text-3xl font-semibold mb-8">
-              You May Also <span className="text-primary">Like</span>
+            <h2 className="font-serif text-2xl text-white mb-8 text-center">
+              You May Also <span className="text-gold">Like</span>
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {relatedProducts.map((relatedProduct) => (
                 <Link
                   key={relatedProduct.id}
                   href={`/products/${relatedProduct.slug}`}
                   className="group"
                 >
-                  <div className="relative overflow-hidden rounded-xl bg-surface border border-text-muted/10">
-                    <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
+                  <div className="relative overflow-hidden rounded-lg bg-gray-900">
+                    <div className="relative aspect-[3/4] overflow-hidden bg-gray-800">
                       <Image
                         src={relatedProduct.images[0]}
                         alt={relatedProduct.name}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 50vw, 25vw"
                       />
                     </div>
-                    <div className="p-4">
-                      <p className="text-xs text-text-muted uppercase tracking-wider mb-2">
-                        {relatedProduct.category.replace("-", " ")}
-                      </p>
-                      <h3 className="font-serif text-lg font-semibold text-text mb-2 line-clamp-1">
+                    <div className="p-3">
+                      <h3 className="font-serif text-sm text-white mb-1 line-clamp-1 group-hover:text-gold transition-colors">
                         {relatedProduct.name}
                       </h3>
-                      <Price price={relatedProduct.price} className="text-lg" />
+                      <Price price={relatedProduct.price} size="sm" />
                     </div>
                   </div>
                 </Link>

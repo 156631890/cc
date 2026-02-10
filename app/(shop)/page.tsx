@@ -3,15 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Star, Shield, Truck, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { ProductGrid } from "@/components/product/product-grid";
 import { CategoryCard } from "@/components/product/category-card";
 import {
   FadeIn,
   StaggerChildren,
   StaggerItem,
-  SlideUp,
 } from "@/components/animations/index";
 import { getFeaturedProducts, getNewProducts, categories } from "@/lib/products";
 
@@ -21,160 +19,170 @@ export default function HomePage() {
 
   const features = [
     {
-      icon: Shield,
-      title: "Premium Quality",
-      description:
-        "Handcrafted with the finest materials sourced from the best suppliers around the world",
+      title: "Handcrafted",
+      description: "Meticulously crafted by master artisans",
     },
     {
-      icon: Truck,
-      title: "Free Shipping",
-      description: "On all orders over $200",
+      title: "Premium Materials",
+      description: "Sourced from the finest suppliers",
     },
     {
-      icon: RefreshCw,
-      title: "Easy Returns",
-      description: "30-day hassle-free returns",
+      title: "Timeless Design",
+      description: "Elegance that transcends trends",
     },
   ];
 
   const reviews = [
     {
-      name: "Sarah M.",
+      name: "Alexandra M.",
       rating: 5,
-      comment: "Absolutely love my new aviators! The quality is outstanding and they're so comfortable for long drives.",
-      product: "Aviator Classic Polarized",
+      comment: "The quality is extraordinary. True refined taste.",
+      product: "Aviator Classic",
     },
     {
-      name: "James T.",
+      name: "Jonathan R.",
       rating: 5,
-      comment: "The blue light glasses have been a game changer for my remote work. No more eye strain!",
-      product: "Digital Shield Classic",
+      comment: "Eyewear that matches my standards. Impeccable.",
+      product: "Signature Cat Eye",
     },
     {
-      name: "Emily R.",
+      name: "VOGUE",
       rating: 5,
-      comment: "Finally found stylish sunglasses that actually stay on during my runs. The Aqua Performance is incredible!",
-      product: "Aqua Performance",
+      comment: "LUXE VISION redefines modern luxury.",
+      product: "Editorial Feature",
     },
   ];
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 bg-secondary">
+      {/* ========================================
+          HERO - Minimal Impact
+          ======================================== */}
+      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-black">
+        {/* Background Image */}
+        <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1508296695146-257a814070b4?w=1920"
-            alt="Luxury Sunglasses"
+            src="https://images.unsplash.com/photo-1508296695146-257a814070b4?w=1920&q=90"
+            alt="LUXE VISION"
             fill
-            className="object-cover opacity-60"
+            className="object-cover opacity-30"
             priority
+            style={{ filter: "grayscale(100%) contrast(120%)" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-background/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <FadeIn>
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-semibold mb-6">
-              <span className="text-gradient-gold">See the World</span>
-              <br />
-              <span className="text-white">In Luxury</span>
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="text-text-muted text-lg mb-8 max-w-2xl mx-auto">
-              Discover our collection of premium sunglasses designed for those
-              who appreciate exceptional craftsmanship and timeless elegance.
+            <p className="text-gold text-[10px] tracking-[0.4em] uppercase mb-8">
+              Premium Eyewear
             </p>
           </FadeIn>
+
+          <FadeIn delay={0.15}>
+            <h1 className="mb-6">
+              <span className="block text-white">The Art of</span>
+              <span className="block text-gold italic">Vision</span>
+            </h1>
+          </FadeIn>
+
+          <FadeIn delay={0.3}>
+            <div className="w-16 h-px bg-gold mx-auto mb-8" />
+          </FadeIn>
+
           <FadeIn delay={0.4}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/products">
-                <Button size="lg" variant="primary">
-                  Shop Collection
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+                <span className="btn-primary">
+                  Explore Collection
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                </span>
               </Link>
               <Link href="/about">
-                <Button size="lg" variant="outline">
-                  Our Story
-                </Button>
+                <span className="btn-outline">Our Story</span>
               </Link>
             </div>
           </FadeIn>
         </div>
+      </section>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-primary rounded-full" />
-          </div>
+      {/* ========================================
+          FEATURES - Clean Icons
+          ======================================== */}
+      <section className="py-24 bg-gray-900">
+        <div className="max-w-5xl mx-auto px-6">
+          <StaggerChildren>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+              {features.map((feature, index) => (
+                <StaggerItem key={index}>
+                  <div className="text-center">
+                    <div className="w-8 h-8 border border-gold/30 rounded-full mx-auto mb-6 flex items-center justify-center">
+                      <div className="w-2 h-2 bg-gold rounded-full" />
+                    </div>
+                    <h3 className="text-xs tracking-[0.25em] uppercase text-white mb-3">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerChildren>
         </div>
       </section>
 
-      {/* Features Bar */}
-      <section className="py-12 bg-surface border-y border-text-muted/10">
-        <StaggerChildren className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <StaggerItem key={index}>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <feature.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white">{feature.title}</h3>
-                    <p className="text-text-muted text-sm">{feature.description}</p>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </div>
-        </StaggerChildren>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========================================
+          FEATURED PRODUCTS
+          ======================================== */}
+      <section className="py-24 bg-black">
+        <div className="max-w-7xl mx-auto px-6">
           <FadeIn>
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
-                Featured <span className="text-primary">Collection</span>
-              </h2>
-              <p className="text-text-muted max-w-2xl mx-auto">
-                Our most sought-after designs, crafted with precision and style
+            <div className="text-center mb-16">
+              <p className="text-gold text-[10px] tracking-[0.4em] uppercase mb-4">
+                The Collection
               </p>
+              <h2 className="mb-4">
+                <span className="text-white">Featured</span>
+              </h2>
+              <div className="w-12 h-px bg-gold mx-auto" />
             </div>
           </FadeIn>
+
           <ProductGrid products={featuredProducts} />
-          <div className="text-center mt-12">
-            <Link href="/products">
-              <Button size="lg" variant="outline">
-                View All Products
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
+
+          <FadeIn>
+            <div className="text-center mt-16">
+              <Link href="/products">
+                <span className="btn-outline">
+                  View All
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                </span>
+              </Link>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========================================
+          CATEGORIES
+          ======================================== */}
+      <section className="py-24 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-6">
           <FadeIn>
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
-                Shop by <span className="text-primary">Collection</span>
-              </h2>
-              <p className="text-text-muted max-w-2xl mx-auto">
-                Find the perfect pair for every occasion
+            <div className="text-center mb-16">
+              <p className="text-gold text-[10px] tracking-[0.4em] uppercase mb-4">
+                Browse By
               </p>
+              <h2>
+                <span className="text-white">Collection</span>
+              </h2>
             </div>
           </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.map((category, index) => (
               <CategoryCard key={category.id} category={category} index={index} />
             ))}
@@ -182,53 +190,83 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* New Arrivals */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========================================
+          NEW ARRIVALS
+          ======================================== */}
+      <section className="py-24 bg-black">
+        <div className="max-w-7xl mx-auto px-6">
           <FadeIn>
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
-                New <span className="text-primary">Arrivals</span>
-              </h2>
-              <p className="text-text-muted max-w-2xl mx-auto">
-                Discover our latest additions to the collection
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+              <div>
+                <p className="text-gold text-[10px] tracking-[0.4em] uppercase mb-4">
+                  Just Arrived
+                </p>
+                <h2 className="mb-4">
+                  <span className="text-gold">New</span>
+                  <span className="text-white"> Additions</span>
+                </h2>
+                <div className="w-12 h-px bg-gold" />
+              </div>
+              <p className="text-gray-400 text-sm max-w-sm">
+                Discover our latest creations, where innovation meets timeless elegance.
               </p>
             </div>
           </FadeIn>
+
           <ProductGrid products={newProducts} />
         </div>
       </section>
 
-      {/* Reviews */}
-      <section className="py-20 bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========================================
+          REVIEWS - Minimal Cards
+          ======================================== */}
+      <section className="py-24 bg-gray-900">
+        <div className="max-w-5xl mx-auto px-6">
           <FadeIn>
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
-                What Our <span className="text-primary">Customers Say</span>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-4 mb-6">
+                <div className="w-8 h-px bg-gold" />
+                <span className="text-gold text-[10px] tracking-[0.4em] uppercase">
+                  Acclaim
+                </span>
+                <div className="w-8 h-px bg-gold" />
+              </div>
+              <h2>
+                <span className="text-white">Testimonials</span>
               </h2>
-              <p className="text-text-muted max-w-2xl mx-auto">
-                Join thousands of satisfied customers who trust LUXE VISION
-              </p>
             </div>
           </FadeIn>
+
           <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {reviews.map((review, index) => (
               <StaggerItem key={index}>
-                <div className="bg-secondary rounded-xl p-6 border border-text-muted/10">
-                  <div className="flex gap-1 mb-4">
+                <div className="bg-black border border-gold/10 p-8 hover:border-gold/20 transition-colors duration-300">
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-6">
                     {Array.from({ length: review.rating }).map((_, i) => (
-                      <Star
+                      <svg
                         key={i}
-                        className="w-5 h-5 fill-primary text-primary"
-                      />
+                        className="w-3 h-3 text-gold"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
                     ))}
                   </div>
-                  <p className="text-text mb-4">{review.comment}</p>
-                  <div className="border-t border-text-muted/10 pt-4">
-                    <p className="font-semibold text-white">{review.name}</p>
-                    <p className="text-text-muted text-sm">
-                      Purchased: {review.product}
+
+                  {/* Quote */}
+                  <p className="text-gray-400 text-sm leading-relaxed mb-8">
+                    "{review.comment}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="border-t border-gold/10 pt-6">
+                    <p className="text-gold text-xs tracking-wider mb-1">
+                      {review.name}
+                    </p>
+                    <p className="text-gray-500 text-[10px] tracking-wider uppercase">
+                      {review.product}
                     </p>
                   </div>
                 </div>
@@ -238,32 +276,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20" />
-        <div className="absolute inset-0 bg-background/80" />
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+      {/* ========================================
+          NEWSLETTER - Clean
+          ======================================== */}
+      <section className="py-24 bg-black">
+        <div className="max-w-2xl mx-auto px-6 text-center">
           <FadeIn>
-            <h2 className="font-serif text-4xl md:text-6xl font-semibold mb-6">
-              Experience the Difference
+            <h2 className="mb-4">
+              <span className="text-white">Join the</span>
+              <span className="text-gold"> Circle</span>
             </h2>
-            <p className="text-text-muted text-lg mb-8 max-w-2xl mx-auto">
-              Join our exclusive newsletter and be the first to know about new
-              arrivals, special offers, and style tips.
+
+            <p className="text-gray-400 text-sm mb-12 leading-relaxed">
+              Be the first to discover new collections and exclusive offers.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-3 bg-surface border border-text-muted/20 rounded-lg focus:border-primary focus:outline-none transition-colors"
-                required
-              />
-              <Button type="submit" size="lg" variant="primary">
-                Subscribe
-              </Button>
+
+            <form className="max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  className="flex-1 px-5 py-3 bg-gray-900 border border-gold/10 text-white placeholder:text-gray-500 focus:border-gold/30 focus:outline-none transition-colors text-sm"
+                  required
+                />
+                <button type="submit" className="btn-primary whitespace-nowrap">
+                  Subscribe
+                </button>
+              </div>
+              <p className="text-gray-600 text-[10px] tracking-wider mt-6">
+                We respect your privacy. Unsubscribe anytime.
+              </p>
             </form>
-            <p className="text-text-muted/60 text-sm mt-4">
-              No spam, unsubscribe anytime.
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ========================================
+          FOOTER PREVIEW
+          ======================================== */}
+      <section className="py-16 bg-gray-900 border-t border-gold/10">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <FadeIn>
+            <p className="text-gold text-[10px] tracking-[0.4em] uppercase mb-4">
+              LUXE VISION
+            </p>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Crafting exceptional eyewear. Each piece tells a story of
+              dedication, precision, and the pursuit of perfection.
             </p>
           </FadeIn>
         </div>

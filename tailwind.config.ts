@@ -10,8 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: "#d4af37",
+        /* Gold - single primary accent color */
+        gold: {
+          DEFAULT: "#c9a961",
+          light: "#d4b978",
           50: "#f9f5e8",
           100: "#f0ebd2",
           200: "#e2d6a6",
@@ -23,26 +25,20 @@ const config: Config = {
           800: "#664110",
           900: "#452009",
         },
-        secondary: {
-          DEFAULT: "#1a1a1a",
-          50: "#e8e8e8",
-          100: "#d1d1d1",
-          200: "#a3a3a3",
-          300: "#757575",
-          400: "#474747",
-          500: "#1a1a1a",
-          600: "#151515",
-          700: "#101010",
-          800: "#0a0a0a",
-          900: "#050505",
+        /* Gray scale - minimal hierarchy */
+        gray: {
+          50: "#fafafa",
+          100: "#f5f5f5",
+          200: "#e5e5e5",
+          300: "#d4d4d4",
+          400: "#a3a3a3",
+          500: "#737373",
+          600: "#525252",
+          700: "#404040",
+          800: "#262626",
+          900: "#171717",
+          950: "#0a0a0a",
         },
-        background: "#0a0a0a",
-        surface: "#141414",
-        text: {
-          DEFAULT: "#ffffff",
-          muted: "#888888",
-        },
-        accent: "#c9a227",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

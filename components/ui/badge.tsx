@@ -13,17 +13,17 @@ export function Badge({
   variant = "default",
 }: BadgeProps) {
   const variants = {
-    default: "bg-text-muted/20 text-text",
-    primary: "bg-primary/20 text-primary",
-    success: "bg-green-500/20 text-green-400",
-    danger: "bg-red-500/20 text-red-400",
-    outline: "border border-text-muted/30 text-text",
+    default: "bg-gray-800 text-gray-300",
+    primary: "bg-gold text-black",
+    success: "bg-gray-800 text-gray-300",
+    danger: "bg-gray-800 text-gray-300",
+    outline: "border border-gold/20 text-gold",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center px-3 py-1 text-xs font-medium rounded-full",
+        "inline-flex items-center px-2 py-1 text-[10px] tracking-wider uppercase font-medium rounded",
         variants[variant],
         className
       )}
@@ -66,7 +66,7 @@ export function Price({
     <div className={cn("flex items-center gap-2", className)}>
       <span
         className={cn(
-          "font-cormorant font-semibold text-primary",
+          "font-serif text-gold",
           sizes[size]
         )}
       >
@@ -75,7 +75,7 @@ export function Price({
       {comparePrice && comparePrice > actualPrice && (
         <span
           className={cn(
-            "font-cormorant text-text-muted line-through",
+            "font-serif text-gray-600 line-through",
             sizes[size]
           )}
         >

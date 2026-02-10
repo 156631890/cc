@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "luxury";
+  variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   fullWidth?: boolean;
@@ -25,20 +25,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed";
+      "inline-flex items-center justify-center rounded font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
-      primary: "bg-gradient-gold text-background hover:shadow-lg hover:shadow-primary/25",
-      secondary: "bg-surface border border-primary/20 text-text hover:border-primary/50",
-      outline: "border border-primary text-primary hover:bg-primary/10",
-      ghost: "text-text hover:text-primary hover:bg-surface",
-      luxury: "bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-semibold hover:shadow-lg hover:shadow-amber-500/30",
+      primary: "bg-gold text-black hover:bg-gold-light",
+      secondary: "bg-gray-900 border border-gold/10 text-white hover:border-gold/30",
+      outline: "border border-gold text-gold hover:bg-gold hover:text-black",
+      ghost: "text-gray-400 hover:text-white hover:bg-gray-900",
     };
 
     const sizes = {
-      sm: "px-4 py-2 text-sm",
-      md: "px-6 py-3 text-base",
-      lg: "px-8 py-4 text-lg",
+      sm: "px-4 py-2 text-xs",
+      md: "px-6 py-3 text-sm",
+      lg: "px-8 py-4 text-base",
     };
 
     return (
