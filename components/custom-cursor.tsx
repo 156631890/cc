@@ -9,7 +9,7 @@ export function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
   const cursorPosition = useRef({ x: 0, y: 0 });
   const dotPosition = useRef({ x: 0, y: 0 });
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
