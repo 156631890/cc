@@ -132,7 +132,7 @@ export function Navbar() {
                           </div>
                           <div className="max-h-64 overflow-y-auto p-4 space-y-4">
                             {cartItems.slice(0, 3).map((item) => (
-                              <div key={item.id} className="flex gap-3">
+                              <div key={item.product.id} className="flex gap-3">
                                 <div className="w-16 h-16 bg-background rounded overflow-hidden flex-shrink-0">
                                   <img
                                     src={item.product.images[0]}
