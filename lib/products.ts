@@ -383,6 +383,37 @@ export const products: Product[] = [
       keywords: ["oversized", "bold", "gradient", "designer"],
     },
   },
+  // New Product - KT001
+  {
+    id: "KT001",
+    name: "Men Polarized Sunglasses",
+    slug: "men-polarized-sunglasses",
+    category: "driving",
+    description: "Classic men's polarized sunglasses with premium frame design. Features advanced glare reduction technology for optimal driving comfort and clear visibility in bright conditions.",
+    price: 12,
+    comparePrice: 19,
+    images: [
+      "https://photo3.yupoo.com/lincaizhi/d1b2df12/4128d1d9.jpg?username=lincaizhi"
+    ],
+    colors: [
+      { name: "金色", hex: "#D4AF37" },
+      { name: "银色", hex: "#C0C0C0" }
+    ],
+    features: [
+      "Polarized lenses",
+      "UV400 protection",
+      "Lightweight frame",
+      "Anti-slip temples",
+    ],
+    inStock: true,
+    isBestseller: false,
+    isNew: true,
+    seo: {
+      title: "Men Polarized Sunglasses | LUXE VISION",
+      description: "Classic men's polarized sunglasses with premium frame design.",
+      keywords: ["men sunglasses", "polarized sunglasses"],
+    },
+  },
 ];
 
 // Helper functions
