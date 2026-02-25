@@ -231,7 +231,7 @@ export default function ProductsPage() {
                     ${priceRange[0]} - ${priceRange[1]}
                     <X className="w-3 h-3" />
                   </button>
-                ))}
+                )}
               </div>
             )}
 
