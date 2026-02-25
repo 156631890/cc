@@ -25,13 +25,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center rounded font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:opacity-50 disabled:cursor-not-allowed";
+      "inline-flex items-center justify-center rounded font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-champagne/30 disabled:opacity-50 disabled:cursor-not-allowed";
 
     const variants = {
-      primary: "bg-gold text-black hover:bg-gold-light",
-      secondary: "bg-gray-900 border border-gold/10 text-white hover:border-gold/30",
-      outline: "border border-gold text-gold hover:bg-gold hover:text-black",
-      ghost: "text-gray-400 hover:text-white hover:bg-gray-900",
+      primary: "bg-champagne text-background hover:bg-champagne-light",
+      secondary: "bg-card border border-champagne/10 text-foreground hover:border-champagne/30",
+      outline: "border border-champagne text-champagne hover:bg-champagne hover:text-background",
+      ghost: "text-foreground/60 hover:text-foreground hover:bg-card",
     };
 
     const sizes = {

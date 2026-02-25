@@ -51,17 +51,17 @@ export default function CartPage() {
     return (
       <div className="min-h-screen flex items-center justify-center py-20">
         <div className="text-center max-w-md">
-          <div className="w-24 h-24 bg-surface rounded-full flex items-center justify-center mx-auto mb-6">
-            <ShoppingBag className="w-12 h-12 text-text-muted" />
+          <div className="w-24 h-24 bg-card rounded-full flex items-center justify-center mx-auto mb-6">
+            <ShoppingBag className="w-12 h-12 text-foreground/50" />
           </div>
-          <h1 className="font-serif text-3xl font-semibold mb-4">
+          <h1 className="font-display text-3xl mb-4">
             Your Cart is Empty
           </h1>
-          <p className="text-text-muted mb-8">
+          <p className="text-foreground/50 mb-8">
             Looks like you haven't added any items to your cart yet.
           </p>
           <Link href="/products">
-            <Button size="lg" variant="luxury">
+            <Button size="lg" variant="primary">
               Start Shopping
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
@@ -74,13 +74,13 @@ export default function CartPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="bg-surface border-b border-text-muted/10 py-8">
+      <div className="bg-card border-b border-border py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h1 className="font-serif text-4xl md:text-5xl font-semibold">
-              Shopping <span className="text-primary">Cart</span>
+            <h1 className="font-display text-4xl md:text-5xl">
+              Shopping <span className="text-champagne">Cart</span>
             </h1>
-            <p className="text-text-muted mt-2">
+            <p className="text-foreground/50 mt-2">
               {items.length} item{items.length !== 1 ? "s" : ""} in your cart
             </p>
           </FadeIn>
@@ -99,7 +99,7 @@ export default function CartPage() {
                       {/* Image */}
                       <Link
                         href={`/products/${item.product.slug}`}
-                        className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-secondary"
+                        className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-background"
                       >
                         <Image
                           src={item.product.images[0]}
@@ -115,17 +115,17 @@ export default function CartPage() {
                           <div>
                             <Link
                               href={`/products/${item.product.slug}`}
-                              className="font-serif text-lg font-semibold hover:text-primary transition-colors"
+                              className="font-display text-lg hover:text-champagne transition-colors"
                             >
                               {item.product.name}
                             </Link>
-                            <p className="text-text-muted text-sm capitalize">
+                            <p className="text-foreground/50 text-sm capitalize">
                               {item.product.category.replace("-", " ")}
                             </p>
                           </div>
                           <button
                             onClick={() => removeItem(item.product.id)}
-                            className="p-2 text-text-muted hover:text-red-500 transition-colors"
+                            className="p-2 text-foreground/50 hover:text-red-400 transition-colors"
                           >
                             <Trash2 className="w-5 h-5" />
                           </button>
@@ -133,17 +133,17 @@ export default function CartPage() {
 
                         {/* Quantity & Price */}
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center border border-text-muted/20 rounded-lg">
+                          <div className="flex items-center border border-border rounded-lg">
                             <button
                               onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                              className="p-2 hover:bg-surface transition-colors"
+                              className="p-2 hover:bg-card transition-colors"
                             >
                               −
                             </button>
                             <span className="w-10 text-center">{item.quantity}</span>
                             <button
                               onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                              className="p-2 hover:bg-surface transition-colors"
+                              className="p-2 hover:bg-card transition-colors"
                             >
                               +
                             </button>
@@ -196,11 +196,11 @@ export default function CartPage() {
                     </p>
                   )}
                   {coupon && (
-                    <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-champagne/10 rounded-lg">
                       <span className="text-sm">{coupon} (10% off)</span>
                       <button
                         onClick={removeCoupon}
-                        className="text-text-muted hover:text-red-400 transition-colors"
+                        className="text-foreground/50 hover:text-red-400 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -209,31 +209,31 @@ export default function CartPage() {
                 </form>
 
                 {/* Totals */}
-                <div className="space-y-3 pt-4 border-t border-text-muted/10">
-                  <div className="flex justify-between text-text-muted">
+                <div className="space-y-3 pt-4 border-t border-border">
+                  <div className="flex justify-between text-foreground/50">
                     <span>Subtotal</span>
                     <Price amount={subtotal} />
                   </div>
-                  <div className="flex justify-between text-text-muted">
+                  <div className="flex justify-between text-foreground/50">
                     <span>Shipping</span>
                     <span>{hasFreeShipping ? "FREE" : <Price amount={shipping} />}</span>
                   </div>
                   {!hasFreeShipping && amountForFreeShipping > 0 && (
-                    <p className="text-sm text-primary">
+                    <p className="text-sm text-champagne">
                       Add ${amountForFreeShipping.toFixed(0)} more for free shipping!
                     </p>
                   )}
-                  <div className="flex justify-between text-text-muted">
+                  <div className="flex justify-between text-foreground/50">
                     <span>Tax (8%)</span>
                     <Price amount={tax} />
                   </div>
                   {discount > 0 && (
-                    <div className="flex justify-between text-primary">
+                    <div className="flex justify-between text-champagne">
                       <span>Discount</span>
                       <span>-${discount.toFixed(2)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-lg font-semibold pt-3 border-t border-text-muted/10">
+                  <div className="flex justify-between text-lg font-medium pt-3 border-t border-border">
                     <span>Total</span>
                     <Price amount={total} size="lg" />
                   </div>
